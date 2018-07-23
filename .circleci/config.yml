@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node
+    working_directory: ~/thermo
+    steps:
+      - checkout
+      - run: yarn
+  deploy:
+    docker:
+    - image: circleci/node
+    working_directory: ~/thermo
+    steps:
+      - run: mkdir ~/.ssh && touch ~/.ssh/known_hosts
+      - run: ssh-keyscan thermo.paulc.in >> ~/.ssh/known_hosts
+      - run: sudo apt install rsync
+      - checkout
+      - run: yarn
+      - run: rsync -avzh . root@thermo.paulc.in:~/thermo
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
