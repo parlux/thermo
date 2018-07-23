@@ -11,13 +11,13 @@
   <div class="target">Target <span id="target"></span></div>
   
   <div class="form">
-    <input class="input" type="number" id="new_target">
-    <button class="btn btn--ghost" onclick="update_setpoint()">Update Target</button>
+    <input class="input" type="number" id="newTarget">
+    <button class="btn btn--ghost" onclick="updateTarget()">Update Target</button>
   </div>
 
   <div class="btn-controls">
-    <button id="on-btn" class="btn" onclick="on_button()">ON</button>
-    <button id="off-btn" class="btn btn--secondary" onclick="off_button()">OFF</button>
+    <button id="on-btn" class="btn" onclick="turnOn()" disabled>ON</button>
+    <button id="off-btn" class="btn btn--secondary" onclick="turnOff()" disabled>OFF</button>
   </div>
 
   <script src="thermo.js"></script>

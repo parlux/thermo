@@ -1,70 +1,56 @@
-status_list = Object.freeze({"true":"ON", "false":"OFF"})
+// Utilites
+const $ = (sel) => document.querySelector(sel)
 
-const getStatus = () => {
-  return fetch("http://localhost:3200/status").then(res => res.json())
+const get = endpoint => fetch(endpoint).then(res => res.json())
+const put = endpoint => fetch(endpoint, { method: 'PUT' }).then(res => res.json())
+const del = endpoint => fetch(endpoint, { method: 'DELETE' }).then(res => res.json())
+const patch = (endpoint, data) => fetch(endpoint, {
+  method: 'PATCH',
+  headers: { "Content-Type": "application/json; charset=utf-8" },
+  body: JSON.stringify(data)
+}).then(res => res.json())
+
+// App
+let appState = {}
+
+const render = () => {
+  $('#current').innerHTML = appState.temp
+  $('#target').innerHTML = appState.sp
+  $('#on-btn').disabled = appState.enable
+  $('#off-btn').disabled = !appState.enable
 }
 
-const foo = getStatus()
-  .then(json => {
-    // Do something here
-    console.log(json)
+const updateStatus = () => {
+  get('/status')
+    .then(data => {
+      appState = { ...appState, ...data }
+      render()
+    })
+}
+
+const turnOn = () => {
+  put("/enabled").then(resJSON => {
+    // TODO: return status here for better update conditions
+    appState.enable = true
+    render()
   })
+}
 
-  // window.onload = refresh_status;
+const turnOff = () => {
+  del("/enabled").then(resJSON => {
+    appState.enable = false
+    render()
+  })
+}
 
-  // function on_button() {
-  //     var xhttp = new XMLHttpRequest();
-  //     xhttp.onreadystatechange = function() {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //       document.getElementById("enable_status").innerHTML =
-  //       this.responseText
-  //     }
-  //   };
-  //   xhttp.open("POST", "update", true);
-  //   xhttp.send("enable=1");
-  // }
+const updateTarget = (a) => {
+  const temperature = $('#newTarget').value
+  patch("/temperature", { temperature }).then(resJSON => {
+    // TODO: return the new target
+    // TODO: rename temp to target
+    appState.sp = temperature
+    render()
+  })
+}
 
-  // function off_button() {
-  //     var xhttp = new XMLHttpRequest();
-  //     xhttp.onreadystatechange = function() {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //       document.getElementById("enable_status").innerHTML =
-  //       this.responseText
-  //     }
-  //   };
-  //   xhttp.open("POST", "update", true);
-  //   xhttp.send("enable=0");
-  // }
-
-  // function update_setpoint() {
-  //     var xhttp = new XMLHttpRequest();
-  //     xhttp.onreadystatechange = function() {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //       document.getElementById("target").innerHTML =
-  //       this.responseText
-  //     }
-  //   };
-  //   xhttp.open("POST", "update", true);
-  //   xhttp.send("sp="+document.getElementById("new_target").value);
-  // }
-
-  // function refresh_status() {
-  //     var xhttp = new XMLHttpRequest();
-  //     xhttp.onreadystatechange = function() {
-  //     if (this.readyState == 4 && this.status == 200) {
-  //       stat = JSON.parse(this.responseText)
-  //       document.getElementById("current").innerHTML = stat.temp
-  //       document.getElementById("target").innerHTML = stat.sp
-
-  //       if (stat.enabled) {
-  //         document.querySelector('#on-btn').disabled = true
-  //         document.querySelector('#off-btn').disabled = false
-  //       } else {
-  //         document.querySelector('#on-btn').disabled = false
-  //         document.querySelector('#off-btn').disabled = true
-  //       }
-  //     }
-  //   };
-  //   xhttp.open("POST", "status", true);
-  //   xhttp.send();
-  // }
+updateStatus()
