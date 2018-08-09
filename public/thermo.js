@@ -21,7 +21,7 @@ const render = () => {
     maximumFractionDigits: 1
   })
   $('#on-btn').disabled = appState.enable === 'true'
-  $('#off-btn').disabled = !appState.enable !== 'true'
+  $('#off-btn').disabled = appState.enable !== 'true'
 }
 
 const updateStatus = () => {
