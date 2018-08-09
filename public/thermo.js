@@ -14,8 +14,12 @@ const patch = (endpoint, data) => fetch(endpoint, {
 let appState = {}
 
 const render = () => {
-  $('#current').innerHTML = appState.temp
-  $('#target').innerHTML = appState.sp
+  $('#current').innerHTML = parseFloat(appState.temp).toLocaleString('en', {
+    maximumFractionDigits: 2
+  })
+  $('#target').innerHTML = parseFloat(appState.sp).toLocaleString('en', {
+    maximumFractionDigits: 2
+  })
   $('#on-btn').disabled = appState.enable
   $('#off-btn').disabled = !appState.enable
 }
