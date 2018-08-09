@@ -64,4 +64,4 @@ const onKeydown = e => {
 }
 
 updateStatus()
-setInterval(() => render(), 10000)
+setInterval(() => updateStatus(), 10000)
