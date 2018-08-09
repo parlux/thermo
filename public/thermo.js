@@ -20,8 +20,8 @@ const render = () => {
   $('#target').innerHTML = parseFloat(appState.sp).toLocaleString('en', {
     maximumFractionDigits: 1
   })
-  $('#on-btn').disabled = appState.enable
-  $('#off-btn').disabled = !appState.enable
+  $('#on-btn').disabled = appState.enable === 'true'
+  $('#off-btn').disabled = !appState.enable !== 'true'
 }
 
 const updateStatus = () => {
