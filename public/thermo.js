@@ -43,7 +43,7 @@ const turnOff = () => {
   })
 }
 
-const updateTarget = (a) => {
+const updateTarget = () => {
   const temperature = $('#newTarget').value
   patch("/temperature", { temperature }).then(resJSON => {
     // TODO: return the new target
@@ -51,6 +51,12 @@ const updateTarget = (a) => {
     appState.sp = temperature
     render()
   })
+}
+
+const onKeydown = e => {
+  if (e.which === 13) {
+    updateTarget()
+  }
 }
 
 updateStatus()
