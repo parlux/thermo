@@ -15,10 +15,10 @@ let appState = {}
 
 const render = () => {
   $('#current').innerHTML = parseFloat(appState.temp).toLocaleString('en', {
-    maximumFractionDigits: 2
+    maximumFractionDigits: 1
   })
   $('#target').innerHTML = parseFloat(appState.sp).toLocaleString('en', {
-    maximumFractionDigits: 2
+    maximumFractionDigits: 1
   })
   $('#on-btn').disabled = appState.enable
   $('#off-btn').disabled = !appState.enable
