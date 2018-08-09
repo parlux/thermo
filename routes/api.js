@@ -3,7 +3,7 @@ var router = express.Router();
 var axios = require('axios');
 
 router.get('/status', function(req, res, next) {
-  axios.post(`${process.env.API_URL}/status`)
+  axios.post(`${process.env.API_URL}/page1`)
     .then(result => res.send(result.data))
     .catch(err => {
       // TODO: this needs to be handled more generally
@@ -12,7 +12,7 @@ router.get('/status', function(req, res, next) {
 });
 
 router.put('/enabled', function(req, res, next) {
-  axios.post(`${process.env.API_URL}/update`, 'enable=1')
+  axios.post(`${process.env.API_URL}/page1`, 'enable=true')
     .then(result => res.send({}))
     .catch(err => {
       res.send({ error_code: err.code })
@@ -20,7 +20,7 @@ router.put('/enabled', function(req, res, next) {
 });
 
 router.delete('/enabled', function(req, res, next) {
-  axios.post(`${process.env.API_URL}/update`, 'enable=0')
+  axios.post(`${process.env.API_URL}/page1`, 'enable=false')
     .then(result => res.send({}))
     .catch(err => {
       res.send({ error_code: err.code })
@@ -28,7 +28,7 @@ router.delete('/enabled', function(req, res, next) {
 });
 
 router.patch('/temperature', function(req, res, next) {
-  axios.post(`${process.env.API_URL}/update`, `sp=${req.body.temperature}`)
+  axios.post(`${process.env.API_URL}/page1`, `sp=${req.body.temperature}`)
     .then(result => res.send({}))
     .catch(err => {
       res.send({ error_code: err.code })
