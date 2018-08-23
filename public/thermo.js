@@ -35,14 +35,14 @@ const updateStatus = () => {
 const turnOn = () => {
   put("/enabled").then(resJSON => {
     // TODO: return status here for better update conditions
-    appState.enable = true
+    appState.enable = 'true'
     render()
   })
 }
 
 const turnOff = () => {
   del("/enabled").then(resJSON => {
-    appState.enable = false
+    appState.enable = 'false'
     render()
   })
 }
