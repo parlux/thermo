@@ -4,6 +4,11 @@ const $ = (sel) => document.querySelector(sel)
 const get = endpoint => fetch(endpoint).then(res => res.json())
 const put = endpoint => fetch(endpoint, { method: 'PUT' }).then(res => res.json())
 const del = endpoint => fetch(endpoint, { method: 'DELETE' }).then(res => res.json())
+const post = (endpoint, data) => fetch(endpoint, {
+  method: 'POST',
+  headers: { "Content-Type": "application/json; charset=utf-8" },
+  body: JSON.stringify(data)
+}).then(res => res.json())
 const patch = (endpoint, data) => fetch(endpoint, {
   method: 'PATCH',
   headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -20,10 +25,22 @@ const render = () => {
   $('#target').innerHTML = parseFloat(appState.sp).toLocaleString('en', {
     maximumFractionDigits: 1
   })
-  $('#timer').innerHTML = appState.schedule_time
+  $('#timer').innerHTML = `Timer set at: ${parseCronTime(appState.schedule_time)}`
   $('#on-btn').disabled = appState.enable === 'true'
   $('#off-btn').disabled = appState.enable !== 'true'
 }
+
+const parseCronTime = (cronTime) => {
+  if (cronTime) {
+    return `${cronTime.split(' ')[1]}:${cronTime.split(' ')[0]}`  
+  } else {
+    return 'off'
+  }
+}
+
+const toCronTime = time => (
+  `${time.split(':')[1]} ${time.split(':')[0]} * * *`
+)
 
 const updateStatus = () => {
   get('/status')
@@ -62,6 +79,29 @@ const onKeydown = e => {
   if (e.which === 13) {
     updateTarget()
   }
+}
+
+const onKeydown2 = e => {
+  if (e.which === 13) {
+    updateOnTime()
+  }
+}
+
+const updateOnTime = () => {
+  const time = $('#newTime').value
+  console.log({ onTime: time })
+  post("/schedule", { onTime: time }).then(resJSON => {
+    appState.schedule_time = toCronTime(time)
+    render()
+  })
+}
+
+const clearTime = () => {
+  del("/schedule").then(resJSON => {
+    $('#newTime').value = ''
+    appState.schedule_time = ''
+    render()
+  })
 }
 
 updateStatus()

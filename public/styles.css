@@ -16,7 +16,7 @@ body {
   content: '\00B0';
 }
 
-.target {
+.target, .timer {
   margin-bottom: 1rem;
   text-align: center;
 }

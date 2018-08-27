@@ -18,9 +18,14 @@
     <button class="btn btn--ghost" onclick="updateTarget()">Update Target</button>
   </div>
 
-  <div class="timer">
-    <p id="timer"></p>
+  <div class="timer" id="timer"></div>
+
+  <div class="form">
+    <input class="input" type="text" id="newTime" onkeydown="onKeydown2(event)">
+    <button class="btn btn--ghost" onclick="updateOnTime()">Update on time</button>
   </div>
+
+  <button class="btn btn--ghost" onclick="clearTime()">Clear timer</button>
 
   <div class="btn-controls">
     <button id="on-btn" class="btn" onclick="turnOn()" disabled>ON</button>

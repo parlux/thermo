@@ -35,4 +35,21 @@ router.patch('/temperature', function(req, res, next) {
     })
 });
 
+
+router.post('/schedule', function(req, res, next) {
+  axios.post(`${process.env.API_URL}/schedule`, { on_time: req.body.onTime })
+    .then(result => res.send({ result: result.data }))
+    .catch(err => {
+      res.send({ error_code: err.code })
+    })
+})
+
+router.delete('/schedule', function(req, res, next) {
+  axios.delete(`${process.env.API_URL}/schedule`, {})
+    .then(result => res.send({ result: result.data }))
+    .catch(err => {
+      res.send({ error_code: err.code })
+    })
+})
+
 module.exports = router;
