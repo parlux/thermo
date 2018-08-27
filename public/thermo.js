@@ -89,7 +89,6 @@ const onKeydown2 = e => {
 
 const updateOnTime = () => {
   const time = $('#newTime').value
-  console.log({ onTime: time })
   post("/schedule", { onTime: time }).then(resJSON => {
     appState.schedule_time = toCronTime(time)
     render()
