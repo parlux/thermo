@@ -20,6 +20,7 @@ const render = () => {
   $('#target').innerHTML = parseFloat(appState.sp).toLocaleString('en', {
     maximumFractionDigits: 1
   })
+  $('#timer').innerHTML = appState.schedule_time
   $('#on-btn').disabled = appState.enable === 'true'
   $('#off-btn').disabled = appState.enable !== 'true'
 }
