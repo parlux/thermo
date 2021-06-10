@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 
-const API_URL = "https://highett.ddns.net"
+const API_URL = "https://highett.ddns.net/hvac"
 
 router.get('/status', function(req, res, next) {
   axios.post(`${API_URL}/page1`)

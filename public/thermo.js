@@ -43,7 +43,7 @@ const toCronTime = time => (
 )
 
 const updateStatus = () => {
-  get('/status')
+  get('status')
     .then(data => {
       appState = { ...appState, ...data }
       render()
@@ -51,7 +51,7 @@ const updateStatus = () => {
 }
 
 const turnOn = () => {
-  put("/enabled").then(resJSON => {
+  put("enabled").then(resJSON => {
     // TODO: return status here for better update conditions
     appState.enable = 'true'
     render()
@@ -59,7 +59,7 @@ const turnOn = () => {
 }
 
 const turnOff = () => {
-  del("/enabled").then(resJSON => {
+  del("enabled").then(resJSON => {
     appState.enable = 'false'
     render()
   })
@@ -67,7 +67,7 @@ const turnOff = () => {
 
 const updateTarget = () => {
   const temperature = $('#newTarget').value
-  patch("/temperature", { temperature }).then(resJSON => {
+  patch("temperature", { temperature }).then(resJSON => {
     // TODO: return the new target
     // TODO: rename temp to target
     appState.sp = temperature
@@ -89,14 +89,14 @@ const onKeydown2 = e => {
 
 const updateOnTime = () => {
   const time = $('#newTime').value
-  post("/schedule", { onTime: time }).then(resJSON => {
+  post("schedule", { onTime: time }).then(resJSON => {
     appState.schedule_time = toCronTime(time)
     render()
   })
 }
 
 const clearTime = () => {
-  del("/schedule").then(resJSON => {
+  del("schedule").then(resJSON => {
     $('#newTime').value = ''
     appState.schedule_time = ''
     render()
