@@ -32,7 +32,7 @@ const render = () => {
 
 const parseCronTime = (cronTime) => {
   if (cronTime) {
-    return `${cronTime.split(' ')[1]}:${cronTime.split(' ')[0]}`  
+    return `${cronTime.split(' ')[1]}:${cronTime.split(' ')[0].padStart(2, '0')}`  
   } else {
     return 'off'
   }
